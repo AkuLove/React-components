@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import DefaultInput from '../UI/inputs/defaultInput';
+import DefaultInput from '../UI/inputs/DefaultInput';
 import style from './header.module.scss';
 import DefaultButton from '../UI/buttons/defaultButton/DefaultButton';
 
@@ -32,12 +32,12 @@ class Header extends Component<object, { searchValue: string }> {
               this.handleChange(e);
             }}
             className="input"
-            placeholder="Find you'r pokemon | for example type - 'pikachu'"
+            placeholder="Find you'r Star Wars hero | for example type - 'Luke Skywalker'"
           />
           <DefaultButton
             className="button"
             text="Search"
-            handleClick={() => console.log(this.state.searchValue)}
+            handleClick={() => '1'}
           />
         </div>
       </header>

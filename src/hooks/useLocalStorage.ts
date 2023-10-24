@@ -1,25 +1,25 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 
-type ReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>];
+// type ReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
-function useLocalStorage<T>(initialValue: T, key: string): ReturnType<T> {
-  const getValue = (): T => {
-    const storage = localStorage.getItem(key);
+// function useLocalStorage<T>(initialValue: T, key: string): ReturnType<T> {
+//   const getValue = (): T => {
+//     const storage = localStorage.getItem(key);
 
-    if (storage) {
-      return JSON.parse(storage);
-    }
+//     if (storage) {
+//       return JSON.parse(storage);
+//     }
 
-    return initialValue;
-  };
+//     return initialValue;
+//   };
 
-  const [value, setValue] = useState(getValue);
+//   const [value, setValue] = useState(getValue);
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [value]);
+//   useEffect(() => {
+//     localStorage.setItem(key, JSON.stringify(value));
+//   }, [value]);
 
-  return [value, setValue];
-}
+//   return [value, setValue];
+// }
 
-export default useLocalStorage;
+// export default useLocalStorage;

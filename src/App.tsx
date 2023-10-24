@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { withErrorBoundary } from 'react-error-boundary';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Layout from './layouts/Layout';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 function App() {
   return (
@@ -22,4 +24,8 @@ function WrappedApp() {
   );
 }
 
-export default WrappedApp;
+const WrappedApplication = withErrorBoundary(WrappedApp, {
+  FallbackComponent: ErrorPage,
+});
+
+export default WrappedApplication;

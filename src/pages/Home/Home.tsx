@@ -1,11 +1,9 @@
 import { Component } from 'react';
-import { withErrorBoundary } from 'react-error-boundary';
-
 import style from './Home.module.scss';
-import ErrorPage from '../ErrorPage/ErrorPage';
 import DefaultButton from '../../components/UI/buttons/defaultButton/DefaultButton';
 import DataManager from '../../services/DataManager';
 import { ISwapiPeople } from '../../types/interfaces/ISwapiPeople';
+import SwapiList from '../../components/SwapiList/SwapiList';
 
 interface IProps {
   // children: React.ReactNode;
@@ -13,33 +11,59 @@ interface IProps {
 
 class Home extends Component<
   IProps,
-  { error: null | boolean; list: ISwapiPeople[] }
+  { error: null | boolean; list: ISwapiPeople[]; count: null | number }
 > {
   dataManager = new DataManager();
 
   constructor(props: IProps) {
     super(props);
-    this.state = { error: null, list: [] };
+    this.state = { error: null, list: [], count: null };
     this.handleClick = this.handleClick.bind(this);
   }
 
   async componentDidMount() {
-    const list = await this.dataManager.getSwapiPeople();
-    this.setState({ list });
+    const searchValueLocalStorage = localStorage.getItem('search');
+    if (searchValueLocalStorage) {
+      this.getPeople(searchValueLocalStorage);
+    } else {
+      this.getPeople();
+    }
   }
+
+  handleGetPeople = async () => {
+    const searchValueLocalStorage = localStorage.getItem('search');
+    if (searchValueLocalStorage) {
+      this.getPeople(searchValueLocalStorage);
+    } else {
+      this.getPeople();
+    }
+  };
 
   handleClick() {
     this.setState({ error: true });
   }
 
+  getPeople = async (localStorageData = '') => {
+    this.setState({ list: [] });
+    this.setState({ count: null });
+    const list = await this.dataManager.getSwapiPeople(localStorageData);
+    this.setState({ list: list.results });
+    this.setState({ count: list.count });
+  };
+
   render() {
-    const { error, list } = this.state;
+    const { error, list, count } = this.state;
+
     if (error) {
       throw new Error('Test Erorr');
     }
-    if (list.length === 0) {
+    if (list.length === 0 && count === null) {
       return <div>Loading...</div>;
     }
+    if (list.length === 0 && count === 0) {
+      return <div>No results</div>;
+    }
+
     return (
       <section className={style.homePage}>
         <div className={style.homeBody}>
@@ -48,19 +72,18 @@ class Home extends Component<
             text="Test Error"
             className="button"
           />
-          <ul>
-            {list.map((people) => (
-              <li key={people.url}>{people.name}</li>
-            ))}
-          </ul>
+          <SwapiList list={list} />
+        </div>
+        <div className={style.searchButton}>
+          <DefaultButton
+            handleClick={this.handleGetPeople}
+            text="Search"
+            className="button"
+          />
         </div>
       </section>
     );
   }
 }
 
-const WrappedHome = withErrorBoundary(Home, {
-  FallbackComponent: ErrorPage,
-});
-
-export default WrappedHome;
+export default Home;

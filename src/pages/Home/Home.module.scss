@@ -1,0 +1,23 @@
+.homePage {
+  position: relative;
+  margin: rem(20) 0;
+}
+
+.homeBody {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  @media (max-width: $mobile) {
+    align-items: stretch;
+  }
+}
+
+.searchButton {
+  position: absolute;
+  top: -59px;
+  right: 0;
+  opacity: 0.1;
+  &:hover {
+    opacity: 1;
+  }
+}

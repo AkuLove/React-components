@@ -1,0 +1,27 @@
+.item {
+  display: flex;
+  column-gap: rem(10);
+  align-items: center;
+  letter-spacing: rem(0.4);
+}
+
+.avatar {
+  svg {
+    min-width: rem(80);
+    min-height: rem(85);
+  }
+}
+
+.body {
+  span {
+    font-weight: 700;
+  }
+
+  .name {
+    font-size: rem(22);
+    padding-bottom: 4px;
+    @media (max-width: em(650)) {
+      @include adaptiveValue('font-size', 32, 22, 0, 650, 320);
+    }
+  }
+}

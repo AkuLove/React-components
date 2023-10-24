@@ -11,7 +11,7 @@ class DataManager {
     );
     const res = await response;
     this.state = res.data.results;
-    return res.data.results;
+    return res.data;
   };
 }
 

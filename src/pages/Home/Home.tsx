@@ -1,89 +1,73 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import style from './Home.module.scss';
 import DefaultButton from '../../components/UI/buttons/defaultButton/DefaultButton';
 import DataManager from '../../services/DataManager';
 import { ISwapiPeople } from '../../types/interfaces/ISwapiPeople';
 import SwapiList from '../../components/SwapiList/SwapiList';
 
-interface IProps {
-  // children: React.ReactNode;
-}
+function Home() {
+  const dataManager = new DataManager();
+  const [error, setError] = useState<boolean>(false);
+  const [list, setList] = useState<ISwapiPeople[]>([]);
+  const [count, setCount] = useState<number | null>(null);
 
-class Home extends Component<
-  IProps,
-  { error: null | boolean; list: ISwapiPeople[]; count: null | number }
-> {
-  dataManager = new DataManager();
-
-  constructor(props: IProps) {
-    super(props);
-    this.state = { error: null, list: [], count: null };
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  async componentDidMount() {
-    const searchValueLocalStorage = localStorage.getItem('search');
-    if (searchValueLocalStorage) {
-      this.getPeople(searchValueLocalStorage);
-    } else {
-      this.getPeople();
-    }
-  }
-
-  handleGetPeople = async () => {
-    const searchValueLocalStorage = localStorage.getItem('search');
-    if (searchValueLocalStorage) {
-      this.getPeople(searchValueLocalStorage);
-    } else {
-      this.getPeople();
-    }
+  const getPeople = async (localStorageData = '') => {
+    setList([]);
+    setCount(null);
+    const resonseList = await dataManager.getSwapiPeople(localStorageData);
+    setList(resonseList.results);
+    setCount(resonseList.count);
   };
 
-  handleClick() {
-    this.setState({ error: true });
-  }
+  useEffect(() => {
+    const searchValueLocalStorage = localStorage.getItem('search');
+    if (searchValueLocalStorage) {
+      getPeople(JSON.parse(searchValueLocalStorage));
+    } else {
+      getPeople();
+    }
+  }, []);
 
-  getPeople = async (localStorageData = '') => {
-    this.setState({ list: [] });
-    this.setState({ count: null });
-    const list = await this.dataManager.getSwapiPeople(localStorageData);
-    this.setState({ list: list.results });
-    this.setState({ count: list.count });
-  };
-
-  render() {
-    const { error, list, count } = this.state;
-
+  useEffect(() => {
     if (error) {
       throw new Error('Test Erorr');
     }
-    if (list.length === 0 && count === null) {
-      return <div>Loading...</div>;
-    }
-    if (list.length === 0 && count === 0) {
-      return <div>No results</div>;
-    }
+  }, [error]);
 
-    return (
-      <section className={style.homePage}>
-        <div className={style.homeBody}>
-          <DefaultButton
-            handleClick={this.handleClick}
-            text="Test Error"
-            className="button"
-          />
-          <SwapiList list={list} />
-        </div>
-        <div className={style.searchButton}>
-          <DefaultButton
-            handleClick={this.handleGetPeople}
-            text="Search"
-            className="button"
-          />
-        </div>
-      </section>
-    );
-  }
+  const handleGetPeople = async () => {
+    const searchValueLocalStorage = localStorage.getItem('search');
+    if (searchValueLocalStorage) {
+      getPeople(JSON.parse(searchValueLocalStorage));
+    } else {
+      getPeople();
+    }
+  };
+
+  const handleError = () => {
+    setError(true);
+  };
+
+  return (
+    <section className={style.homePage}>
+      <div className={style.homeBody}>
+        <DefaultButton
+          handleClick={handleError}
+          text="Test Error"
+          className="button"
+        />
+        {list.length === 0 && count === null && <div>Loading...</div>}
+        {list.length === 0 && count === 0 && <div>No results</div>}
+        <SwapiList list={list} />
+      </div>
+      <div className={style.searchButton}>
+        <DefaultButton
+          handleClick={handleGetPeople}
+          text="Search"
+          className="button"
+        />
+      </div>
+    </section>
+  );
 }
 
 export default Home;

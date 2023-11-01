@@ -16,3 +16,25 @@
   background-color: rgb(113, 187, 189);
   border: 1px solid rgb(113, 187, 189);
 }
+
+//===============================================================
+
+.active {
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px solid plum;
+  font-weight: 700;
+  transition: all ease 0.3s;
+  cursor: pointer;
+}
+
+.active:hover {
+  background-color: rgb(219, 137, 219);
+  color: #fff;
+  transition: all ease 0.3s;
+}
+
+.active:active {
+  background-color: rgb(236, 160, 236);
+  border: 1px solid rgb(236, 160, 236);
+}

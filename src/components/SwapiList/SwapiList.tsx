@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { ISwapiPeople } from '../../types/interfaces/ISwapiPeople';
 import SwapiItem from '../SwapiItem/SwapiItem';
 import style from './SwapiList.module.scss';
 
-function SwapiList({ list }: { list: ISwapiPeople[] }) {
+const SwapiList = memo(({ list }: { list: ISwapiPeople[] }) => {
   return (
     <ul className={style.list}>
       {list.map((item) => (
@@ -10,6 +11,6 @@ function SwapiList({ list }: { list: ISwapiPeople[] }) {
       ))}
     </ul>
   );
-}
+});
 
 export default SwapiList;

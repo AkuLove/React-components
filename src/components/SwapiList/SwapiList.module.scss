@@ -1,11 +1,12 @@
 .list {
+  margin: rem(20) 0;
   display: grid;
   grid-template-columns: rem(300) rem(300) rem(300);
   gap: rem(16);
   font-size: rem(18);
   justify-content: space-between;
   @media (max-width: $tablet) {
-    grid-template-columns: rem(280) rem(280);
+    grid-template-columns: 1fr 1fr;
   }
   @media (max-width: em(650)) {
     @include adaptiveValue('font-size', 32, 18, 0, 650, 320);

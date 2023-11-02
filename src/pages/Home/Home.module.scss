@@ -1,11 +1,12 @@
 .homePage {
   position: relative;
-  flex: 1 1 auto;
   margin: rem(20) 0;
 }
 
 .homeBody {
+  min-height: 100%;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   row-gap: 12px;
   @media (max-width: $mobile) {
@@ -21,4 +22,24 @@
   &:hover {
     opacity: 1;
   }
+}
+
+.list {
+  min-height: 80vh;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: rem(32);
+  font-weight: 700;
+  color: #fff;
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  text-shadow: 3px 3px 2px rgba(18, 84, 128, 1);
+  width: 100vw;
+  height: 100vh;
 }

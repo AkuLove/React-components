@@ -1,0 +1,43 @@
+.itemBody {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  font-size: rem(26);
+
+  .closeItem {
+    cursor: pointer;
+    flex: 1 1 60%;
+
+    a {
+      display: block;
+      height: 100%;
+    }
+  }
+
+  .itemContent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: rem(4);
+    padding: rem(20);
+    background-color: #fff;
+    box-shadow: -5px 0px 5px 0px rgba(34, 60, 80, 0.2);
+    flex: 1 1 40%;
+
+    button {
+      align-self: flex-end;
+    }
+  }
+
+  .name {
+    font-size: rem(32);
+  }
+
+  span {
+    font-weight: 700;
+  }
+}

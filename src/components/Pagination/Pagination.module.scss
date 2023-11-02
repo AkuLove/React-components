@@ -1,6 +1,8 @@
 .pagination {
   display: flex;
-  column-gap: 4px;
+  flex-wrap: wrap;
+  column-gap: rem(8);
+  row-gap: rem(12);
   justify-content: center;
   flex: 1 1 auto;
 }
